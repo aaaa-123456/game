@@ -1,0 +1,81 @@
+[gd_scene load_steps=2 format=3 uid="uid://drrq7wuohw0xj"]
+
+[sub_resource type="GDScript" id="GDScript_ylfpe"]
+script/source = "extends Panel
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+var money := 1000
+
+func _on_button_pressed():
+	if money>=100:
+		money -= 100
+		
+		var randon_number1 : int = randf_range(1,9)
+		var randon_number2 : int = randf_range(1,9)
+		
+		var target1 : int = $SpinBox.value
+		var target2 : int = $SpinBox2.value
+		
+		if randon_number1 == target1 or randon_number1 == target2 or randon_number2 == target1 or randon_number2 == target2:
+			money += 300
+			$Label.text = \"随机数是\" + str(randon_number1) + \",\" + str(randon_number2) + \"\\n你猜中了,你还有： \" + str(money)
+		else:
+			$Label.text = \"随机数是\" + str(randon_number1) + \",\" + str(randon_number2) + \"\\n你没猜中,你还有： \" + str(money)
+			
+	else:
+		$Label.text = \"你没钱了\"
+	
+"
+
+[node name="Panel" type="Panel"]
+offset_left = 382.0
+offset_top = 46.0
+offset_right = 750.0
+offset_bottom = 549.0
+script = SubResource("GDScript_ylfpe")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 204.0
+offset_right = 271.0
+offset_bottom = 287.0
+
+[node name="SpinBox" type="SpinBox" parent="."]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 126.0
+offset_right = 146.063
+offset_bottom = 157.0
+
+[node name="SpinBox2" type="SpinBox" parent="."]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 130.0
+offset_right = 290.063
+offset_bottom = 161.0
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 91.0
+offset_top = 330.0
+offset_right = 264.0
+offset_bottom = 373.0
+text = "买！"
+
+[node name="Label3" type="Label" parent="."]
+layout_mode = 0
+offset_left = 81.0
+offset_top = 403.0
+offset_right = 277.0
+offset_bottom = 458.0
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

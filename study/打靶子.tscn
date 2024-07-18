@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://ba5xccmis3ybw"]
+
+[ext_resource type="Texture2D" uid="uid://bsq1q8kqip4w7" path="res://icon.svg" id="1_glwjw"]
+
+[sub_resource type="GDScript" id="GDScript_rm3s7"]
+script/source = "extends RigidBody2D
+
+var 移动速度:int = 500
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+func _physics_process(delta):
+	var 移动输入 := Input.get_vector(\"left\", \"right\", \"up\", \"down\")
+	if 移动输入.length() > 0:
+		move_and_collide(移动输入 * delta * 移动速度)
+
+func _process(delta):
+	var 鼠标方向 = get_global_mouse_position() - global_position
+	rotation = 鼠标方向.angle()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_felhj"]
+size = Vector2(50, 100)
+
+[node name="RigidBody2D" type="RigidBody2D"]
+position = Vector2(411, 229)
+script = SubResource("GDScript_rm3s7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+scale = Vector2(0.402344, 0.789063)
+texture = ExtResource("1_glwjw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_felhj")
